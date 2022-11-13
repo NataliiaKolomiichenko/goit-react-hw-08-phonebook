@@ -1,0 +1,8 @@
+.appBar_container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fafad2;
+    font-weight: 700;
+}

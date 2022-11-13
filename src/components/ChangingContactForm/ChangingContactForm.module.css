@@ -1,0 +1,37 @@
+.changingForm {
+    display: block;
+    margin: 0 auto;
+    padding: 20px;
+    height: 200px;
+    width: 300px;
+    background-color: aliceblue;
+}
+
+.changingFormInput {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.changingFormInputLabel {
+    font-weight: 700;
+}
+
+.changingFormBtn {
+    cursor: pointer;
+    margin-bottom: 10px;
+    background-color: white;
+    border: 2px solid #008CBA;
+    color: black;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    transition-duration: 0.4s;
+}
+
+.changingFormBtn:hover {
+    background-color: #008CBA;
+    color: white;
+}

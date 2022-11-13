@@ -1,22 +1,24 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { selectContacts } from 'redux/contacts/selectors';
-import { addContact } from 'redux/contacts/operations';
+import { updateContact } from 'redux/contacts/operations';
 import { useState } from 'react';
-import css from './ContactForm.module.css'
+import PropTypes from "prop-types";
+import css from './ChangingContactForm.module.css'
 
-const ContactForm = () => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+const ChangingContactForm = ({ id, onToggle, prevName, prevNumber }) => {
+  const [name, setName] = useState(prevName);
+  const [number, setNumber] = useState(prevNumber);
   const contacts = useSelector(selectContacts)
   const dispatch = useDispatch();
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    addNewContact(name);
+    updatedContact(name);
+    onToggle()
   };
 
-  const addNewContact = (contactName) => {
+  const updatedContact = (contactName) => {
     const normalizedNameNewContract = contactName.toLowerCase();
     const contactNames = contacts.map(contact => {
       const contactName = contact.name;
@@ -26,7 +28,7 @@ const ContactForm = () => {
       return alert(`${name} is already in contacts.`)
     }
       
-    dispatch(addContact({ name, number }));
+    dispatch(updateContact({ id, name, number }));
     setName('');
     setNumber('')
   };
@@ -46,36 +48,43 @@ const ContactForm = () => {
     };
   };
 
-  return <form className={css.form} onSubmit={handleSubmit}>
-        <label className={css.inputLabel}> Name
+  return <form className={css.changingForm} onSubmit={handleSubmit}>
+        <label className={css.changingFormInputLabel}> Name
             <input
-              className={css.input}
+              className={css.changingFormInput}
               type="text"
               name="name"
-              value={name}
               onChange={handleChange}
+              defaultValue={name}
               pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
             />
         </label>
         
-        <label className={css.inputLabel}> Phone number
+        <label className={css.changingFormInputLabel}> Phone number
             <input
-              className={css.input}
+              className={css.changingFormInput}
               type="tel"
               name="number"
-              value={number}
               onChange={handleChange}
+              defaultValue={number}
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
             />
         </label>
-        
-        <button type="submit" className={css.btn}>Add contact</button>
+        <p>Please, change name or number</p>
+        <button type="submit" className={css.changingFormBtn}>Change contact</button>
       </form>
     
 }
 
-export default ContactForm;
+ChangingContactForm.propTypes = {
+  onToggle: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  prevName: PropTypes.string.isRequired,
+  prevNumber: PropTypes.string.isRequired,
+}
+
+export default ChangingContactForm;

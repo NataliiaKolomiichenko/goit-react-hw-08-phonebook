@@ -1,5 +1,16 @@
+.listItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .listItem:not(:last-child) {
     margin-bottom: 10px;
+}
+
+.contactItem_text {
+    font-size: 14px;
+    margin: 0;
 }
 
 .btn {
