@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 export const fetchContacts = createAsyncThunk("contacts/fetchAll", async (_, { rejectWithValue }) => {
     try {
@@ -13,6 +14,7 @@ export const fetchContacts = createAsyncThunk("contacts/fetchAll", async (_, { r
 export const addContact = createAsyncThunk("contacts/addContact", async ({ name, number }, { rejectWithValue }) => {
     try {
         const response = await axios.post("/contacts", { name, number });
+        Notify.success('Contact added 😀');
         return response.data
     } catch (error) {
         return rejectWithValue(error.message)
@@ -22,6 +24,7 @@ export const addContact = createAsyncThunk("contacts/addContact", async ({ name,
 export const deleteContact = createAsyncThunk("contacts/deleteContact", async (contactId, { rejectWithValue }) => {
     try {
         const response = await axios.delete(`/contacts/${contactId}`);
+        Notify.success('Contact removed 😉');
         return response.data
     } catch (error) {
         return rejectWithValue(error.message)
@@ -36,6 +39,7 @@ export const updateContact = createAsyncThunk(
         name,
         number,
       });
+      Notify.success('Contact changed 😉');
       return data;
     } catch (error) {
       return rejectWithValue(error.message);

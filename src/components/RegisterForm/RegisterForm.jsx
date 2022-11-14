@@ -25,9 +25,6 @@ const RegisterForm = () => {
     const handleSubmit = event => {
         event.preventDefault();
         dispatch(register({ name, email, password }));
-        setName('');
-        setEmail('');
-        setPassword('');
     };
 
     return (
